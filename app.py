@@ -19,17 +19,17 @@ with open("data/symptoms.json") as f:
 with open("data/firstaid.json") as f:
     firstaid_data = json.load(f)
 
-# ✅ Landing Page
+# Landing Page
 @app.route("/landing")
 def landing():
     return render_template("landing.html")
 
-# ✅ Redirect root "/" to landing
+# Redirect root "/" to landing
 @app.route("/")
 def home_redirect():
     return redirect("/landing")
 
-# ✅ Symptom Checker Route (moved to /checker)
+# Symptom Checker Route (moved to /checker)
 @app.route("/checker", methods=["GET", "POST"])
 def index():
     if 'user' not in session:
@@ -183,3 +183,5 @@ def chatbot():
 #  Run the app
 if __name__ == "__main__":
     app.run(debug=True)
+if __name__ == "__main__":
+    app.run(debug=True, host="0.0.0.0", port=8000)
