@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>HealthCheck – Symptom Checker</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body class="light-theme">
+    <header>
+        <h1>🩺 HealthCheck</h1>
+        <div class="user-info">
+            Welcome, {{ user }} |
+            <a href="{{ url_for('logout') }}">Logout</a> |
+            <a href="{{ url_for('history') }}">History</a>
+        </div>
+    </header>
+
+    <main>
+        <h2>Select Your Symptoms</h2>
+        <form method="POST">
+            <div class="symptom-list">
+                {% for symptom in symptoms %}
+                    <label>
+                        <input type="checkbox" name="symptoms" value="{{ symptom }}">
+                        {{ symptom.capitalize() }}
+                    </label><br>
+                {% endfor %}
+            </div>
+            <button type="submit">Check Health</button>
+        </form>
+    </main>
+
+    <!-- Chatbot Toggle Button -->
+    <button id="chatbotToggle" class="chatbot-btn">💬 Talk to Health Chatbot</button>
+
+    <!-- Chatbot Popup Box -->
+    <div id="chatbotContainer" class="chatbot-container hidden">
+        <div class="chatbot-header">
+            <span>Health AI Chatbot</span>
+            <button id="chatbotClose">&times;</button>
+        </div>
+        <div class="chatbot-body" id="chatbotMessages">
+            <div class="bot-msg">Hi! I'm your health assistant. How can I help you?</div>
+        </div>
+        <div class="chatbot-input">
+            <input type="text" id="chatbotInput" placeholder="Type your message..." />
+            <button id="sendBtn">Send</button>
+        </div>
+    </div>
+
+    <!-- Chatbot CSS -->
+    <style>
+        .chatbot-btn {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #ffc107;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 50px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+            cursor: pointer;
+            font-size: 16px;
+            z-index: 1000;
+        }
+        .chatbot-container {
+            position: fixed;
+            bottom: 90px;
+            right: 30px;
+            width: 320px;
+            background: white;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.3);
+            display: flex;
+            flex-direction: column;
+            z-index: 1001;
+        }
+        .chatbot-header {
+            background: #007bff;
+            color: white;
+            padding: 10px;
+            border-top-left-radius: 8px;
+            border-top-right-radius: 8px;
+            display: flex;
+            justify-content: space-between;
+        }
+        .chatbot-body {
+            padding: 10px;
+            height: 200px;
+            overflow-y: auto;
+            font-size: 14px;
+        }
+        .chatbot-input {
+            display: flex;
+            border-top: 1px solid #ccc;
+        }
+        .chatbot-input input {
+            flex: 1;
+            padding: 8px;
+            border: none;
+            outline: none;
+        }
+        .chatbot-input button {
+            padding: 8px 12px;
+            border: none;
+            background: #28a745;
+            color: white;
+            cursor: pointer;
+        }
+        .hidden {
+            display: none;
+        }
+        .bot-msg, .user-msg {
+            margin: 5px 0;
+            padding: 6px 10px;
+            border-radius: 10px;
+        }
+        .bot-msg {
+            background: #e7f1ff;
+            align-self: flex-start;
+        }
+        .user-msg {
+            background: #d4edda;
+            align-self: flex-end;
+        }
+    </style>
+
+    <!-- Chatbot JS -->
+    <script>
+        const toggleBtn = document.getElementById('chatbotToggle');
+        const chatbotBox = document.getElementById('chatbotContainer');
+        const closeBtn = document.getElementById('chatbotClose');
+        const input = document.getElementById('chatbotInput');
+        const sendBtn = document.getElementById('sendBtn');
+        const messages = document.getElementById('chatbotMessages');
+
+        toggleBtn.addEventListener('click', () => chatbotBox.classList.toggle('hidden'));
+        closeBtn.addEventListener('click', () => chatbotBox.classList.add('hidden'));
+
+        sendBtn.addEventListener('click', async () => {
+            const msg = input.value.trim();
+            if (!msg) return;
+
+            // Show user's message
+            const userMsg = document.createElement('div');
+            userMsg.className = 'user-msg';
+            userMsg.textContent = msg;
+            messages.appendChild(userMsg);
+            input.value = '';
+
+            // Call Flask backend chatbot route
+            const res = await fetch('/chatbot', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ prompt: msg })
+            });
+
+            const data = await res.json();
+            const botMsg = document.createElement('div');
+            botMsg.className = 'bot-msg';
+            botMsg.textContent = data.reply;
+            messages.appendChild(botMsg);
+
+            messages.scrollTop = messages.scrollHeight;
+        });
+    </script>
+</body>
+</html>

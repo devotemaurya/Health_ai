@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <title>HealthCheck – Your Smart Health Assistant</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+      tailwind.config = {
+        darkMode: 'class',
+        theme: {
+          extend: {
+            colors: {
+              primary: '#06b6d4',
+            }
+          }
+        }
+      }
+    </script>
+</head>
+<body class="bg-gray-900 text-white dark:bg-gray-900 dark:text-white transition-all duration-300">
+
+
+    <!-- Header -->
+    <header class="flex items-center justify-between px-6 py-4 bg-gray-800 dark:bg-gray-800">
+        <h1 class="text-2xl font-bold text-primary">HealthCheck</h1>
+        <div class="flex items-center space-x-4">
+            <a href="/login" class="text-sm font-semibold hover:underline">Login</a>
+            <a href="/register" class="text-sm font-semibold hover:underline">Register</a>
+            <button onclick="toggleTheme()" class="bg-gray-700 px-3 py-1 rounded text-sm">Toggle</button>
+        </div>
+    </header>
+
+    <!-- Main Section -->
+    <main class="flex flex-col items-center justify-center min-h-screen text-center px-6">
+        <h2 class="text-4xl md:text-5xl font-extrabold leading-tight mb-4">Welcome to <span class="text-primary">HealthCheck</span></h2>
+        <p class="text-lg md:text-xl max-w-xl mb-6">Your AI-powered health assistant to check symptoms, get first-aid suggestions, and chat with a healthbot — all in one place.</p>
+        <a href="/login" class="bg-primary text-white px-6 py-3 rounded-full text-lg font-semibold hover:bg-cyan-500 transition">Get Started</a>
+<video autoplay muted loop playsinline class="landing-video">
+  <source src="{{ url_for('static', filename='landingvideo.mp4') }}" type="video/mp4">
+  Your browser does not support the video tag.
+</video>
+<style>
+    .landing-video {
+    position: absolute;
+    width: 100%;
+    height: 100vh;
+    object-fit: cover;
+    z-index: -1;
+    opacity: 0.6;
+    filter: brightness(70%);
+}
+
+</style>
+        <!-- Lottie Animation (Optional) -->
+        <div class="mt-10">
+            <lottie-player src="https://lottie.host/89e60e5a-d6bc-4bc2-a66c-9b5bb9fd465e/GkAFzOdRre.json" background="transparent" speed="1" style="width: 300px; height: 300px;" loop autoplay></lottie-player>
+        </div>
+    </main>
+
+    <!-- Script for Theme Toggle -->
+    <script>
+      function toggleTheme() {
+          const html = document.documentElement;
+          html.classList.toggle('dark');
+          if (html.classList.contains('dark')) {
+              document.body.classList.remove('bg-white', 'text-black');
+              document.body.classList.add('bg-gray-900', 'text-white');
+          } else {
+              document.body.classList.remove('bg-gray-900', 'text-white');
+              document.body.classList.add('bg-white', 'text-black');
+          }
+      }
+    </script>
+
+    <!-- Lottie Script -->
+     <!-- Footer -->
+    <footer class="mt-10 text-sm text-gray-500">    
+        <p>&copy; 2025 HealthCheck. All rights reserved.</p>
+        <p>Made by <a href="https://nkmaurya.pythonanywhere.com/login" class="text-primary hover:underline">N.K.Maurya</a></p>
+    </footer>
+</body>
+</html>

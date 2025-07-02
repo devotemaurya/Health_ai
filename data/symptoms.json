@@ -1,0 +1,5 @@
+{
+  "cold": ["cough", "sneezing", "runny nose"],
+  "dehydration": ["dry mouth", "fatigue", "dizziness"],
+  "food_poisoning": ["vomiting", "diarrhea", "stomach cramps"]
+}
