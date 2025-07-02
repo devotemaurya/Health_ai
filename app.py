@@ -180,8 +180,6 @@ def chatbot():
         print("Chatbot error:", e)
         return jsonify({"reply": "Sorry, I'm having trouble reaching the chatbot."}), 500
 
-#  Run the app
-if __name__ == "__main__":
-    app.run(debug=True)
-if __name__ == "__main__":
-    app.run(debug=True, host="0.0.0.0", port=8000)
+# #  Run the app
+# if __name__ == "__main__":
+#     app.run(debug=True, host="0.0.0.0", port=8000)
