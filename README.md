@@ -7,7 +7,7 @@
 
 ## 🔗 Live Demo
 
-👉 [Visit the Live App](https://healthai-production-e0e5.up.railway.app/) *(Replace with actual link)*
+👉 [Visit the Live App](https://healthai-production-e0e5.up.railway.app/) 
 
 ---
 
