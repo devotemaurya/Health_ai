@@ -6,6 +6,10 @@ from xhtml2pdf import pisa
 import os
 from dotenv import load_dotenv
 import requests
+import os
+if not os.path.exists("users.db"):
+    from init_db import *
+    from add_history_table import *
 
 load_dotenv()
 
